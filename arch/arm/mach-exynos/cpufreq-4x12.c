@@ -25,7 +25,7 @@
 #include <plat/clock.h>
 #include <plat/cpu.h>
 
-#define CPUFREQ_LEVEL_END	(L14 + 1)
+#define CPUFREQ_LEVEL_END	(L15 + 1)
 
 #undef PRINT_DIV_VAL
 
@@ -62,6 +62,7 @@ static struct cpufreq_frequency_table exynos4x12_freq_table[] = {
 	{L12, 400*1000},
 	{L13, 300*1000},
 	{L14, 200*1000},
+	{L15, 100*1000},
 	{0, CPUFREQ_TABLE_END},
 };
 
@@ -117,6 +118,9 @@ static unsigned int clkdiv_cpu0_4212[CPUFREQ_LEVEL_END][8] = {
 
 	/* ARM L14: 200MHz */
 	{ 0, 1, 3, 0, 1, 1, 1, 0 },
+
+	/* ARM L15: 100MHz */
+	{ 0, 1, 3, 0, 1, 1, 1, 0 },
 };
 
 static unsigned int clkdiv_cpu0_4412[CPUFREQ_LEVEL_END][8] = {
@@ -169,6 +173,9 @@ static unsigned int clkdiv_cpu0_4412[CPUFREQ_LEVEL_END][8] = {
 
 	/* ARM L14: 200MHz */
 	{ 0, 1, 3, 0, 1, 1, 1, 0 },
+
+	/* ARM L15: 100MHz */
+	{ 0, 1, 3, 0, 1, 1, 1, 0 },
 };
 
 static unsigned int clkdiv_cpu1_4212[CPUFREQ_LEVEL_END][2] = {
@@ -218,6 +225,9 @@ static unsigned int clkdiv_cpu1_4212[CPUFREQ_LEVEL_END][2] = {
 	{ 3, 0 },
 
 	/* ARM L14: 200MHz */
+	{ 3, 0 },
+
+	/* ARM L15: 100MHz */
 	{ 3, 0 },
 };
 
@@ -269,6 +279,9 @@ static unsigned int clkdiv_cpu1_4412[CPUFREQ_LEVEL_END][3] = {
 
 	/* ARM L14: 200MHz */
 	{ 3, 0, 0 },
+
+	/* ARM L15: 100MHz */
+	{ 3, 0, 0 },
 };
 
 static unsigned int exynos4x12_apll_pms_table[CPUFREQ_LEVEL_END] = {
@@ -317,6 +330,9 @@ static unsigned int exynos4x12_apll_pms_table[CPUFREQ_LEVEL_END] = {
 	/* APLL FOUT L14: 200MHz */
 	((100<<16)|(3<<8)|(0x2)),
 
+	/* APLL FOUT L15: 100MHz */
+	((100<<16)|(3<<8)|(0x3)),
+
 };
 
 /*
@@ -342,6 +358,7 @@ static const unsigned int asv_voltage_4212[CPUFREQ_LEVEL_END][12] = {
 	{  912500,  900000,  900000,  900000,  900000,	900000,	 900000,  900000,  900000,  900000,  900000,  900000 }, /* L12 */
 	{  912500,  900000,  900000,  900000,  900000,	900000,	 900000,  900000,  900000,  900000,  900000,  900000 }, /* L13 */
 	{  912500,  900000,  900000,  900000,  900000,	900000,	 900000,  900000,  900000,  900000,  900000,  900000 }, /* L14 */
+	{  912500,  900000,  900000,  900000,  900000,  900000,  900000,  887500,  875000,  875000,  862500,  862500 }, /* L15 */
 };
 
 static const unsigned int asv_voltage_s[CPUFREQ_LEVEL_END] = {
@@ -352,8 +369,8 @@ static const unsigned int asv_voltage_s[CPUFREQ_LEVEL_END] = {
 /* ASV table for 12.5mV step */
 static const unsigned int asv_voltage_step_12_5[CPUFREQ_LEVEL_END][12] = {
 	/*   ASV0,    ASV1,    ASV2,    ASV3,	 ASV4,	  ASV5,	   ASV6,    ASV7,    ASV8,    ASV9,   ASV10,   ASV11 */
-	{	0,       0,	  0,	   0,	    0,	     0,	      0,       0,       0,       0,	  0,       0 },	/* L0 - Not used */
-	{	0,       0,	  0,	   0,	    0,	     0,	      0,       0,       0,       0,	  0,       0 },	/* L1 - Not used */
+	{ 1325000, 1312500, 1300000, 1287500, 1300000, 1287500,	1275000, 1250000, 1250000, 1237500, 1225000, 1212500 },	
+	{ 1325000, 1312500, 1300000, 1287500, 1300000, 1287500,	1275000, 1250000, 1250000, 1237500, 1225000, 1212500 },
 	{ 1325000, 1312500, 1300000, 1287500, 1300000, 1287500,	1275000, 1250000, 1250000, 1237500, 1225000, 1212500 },
 	{ 1300000, 1275000, 1237500, 1237500, 1250000, 1250000,	1237500, 1212500, 1200000, 1200000, 1187500, 1175000 },
 	{ 1225000, 1212500, 1200000, 1187500, 1200000, 1187500,	1175000, 1150000, 1137500, 1125000, 1125000, 1112500 },
@@ -367,6 +384,7 @@ static const unsigned int asv_voltage_step_12_5[CPUFREQ_LEVEL_END][12] = {
 	{  975000,  962500,  950000,  925000,  950000,  925000,	 925000,  925000,  900000,  900000,  900000,  887500 },
 	{  950000,  937500,  925000,  900000,  925000,  900000,	 900000,  900000,  900000,  887500,  875000,  862500 },
 	{  925000,  912500,  900000,  900000,  900000,  900000,	 900000,  900000,  887500,  875000,  875000,  862500 },
+	{  912500,  900000,  900000,  900000,  900000,  900000,  900000,  887500,  875000,  875000,  862500,  862500 },
 };
 
 static const unsigned int asv_voltage_step_12_5_rev2[CPUFREQ_LEVEL_END][12] = {
@@ -385,7 +403,8 @@ static const unsigned int asv_voltage_step_12_5_rev2[CPUFREQ_LEVEL_END][12] = {
 	{  975000,  962500,  950000,  925000,  950000,  925000,  925000,  925000,  900000,  900000,  900500,  887500 },	/* L11 */
 	{  925000,  912500,  900000,  900000,  900000,  900000,  900000,  900000,  887500,  875000,  875000,  862500 },	/* L12 */
 	{  925000,  912500,  900000,  900000,  900000,  900000,  900000,  900000,  887500,  875000,  875000,  862500 },	/* L13 */
-	{  925000,  912500,  900000,  900000,  900000,  900000,  900000,  900000,  887500,  875000,  875000,  862500 },	/* L114 */
+	{  925000,  912500,  900000,  900000,  900000,  900000,  900000,  900000,  887500,  875000,  875000,  862500 },	/* L14 */
+	{  912500,  900000,  900000,  900000,  900000,  900000,  900000,  887500,  875000,  875000,  862500,  862500 },	/* L15 */
 };
 
 static void set_clkdiv(unsigned int div_index)
@@ -536,7 +555,7 @@ static void __init set_volt_table(void)
 
 #ifdef CONFIG_EXYNOS4X12_1500MHZ_SUPPORT
 	for_1500 = true;
-	max_support_idx = L1;
+	max_support_idx = L0;
 #elif defined(CONFIG_EXYNOS4X12_1200MHZ_SUPPORT)
 	for_1200 = true;
 	max_support_idx = L4;
