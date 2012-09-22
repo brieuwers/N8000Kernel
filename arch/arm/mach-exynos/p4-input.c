@@ -122,8 +122,8 @@ static u8 inform_data_rev6[] = {0,
 	62, 1, 0, 1,
 	62, 10, 5, 21,
 	62, 12, 5, 21,
-	62, 19, 130, 62,
-	62, 20, 12, 20,
+	62, 19, 120, 62,
+	62, 20, 10, 20,
 };
 
 static u8 inform_data_rev5[] = {0,
@@ -324,8 +324,8 @@ static u8 t8_config_s[] = { GEN_ACQUISITIONCONFIG_T8,
 static u8 t9_config_s[] = { TOUCH_MULTITOUCHSCREEN_T9,
 	0x83, 0, 0, P4_NOTE_X_NUM, P4_NOTE_Y_NUM,
 	0, MXT1664S_BLEN_BATT, MXT1664S_THRESHOLD_BATT, 1, 1,
-	10, 15, 1, 65, MXT1664S_MAX_MT_FINGERS, 20, 30, 20, 255, 15,
-	255, 15, 5, 246, 5, 5, 0, 0, 0, 0,
+	0, 15, 1, 65, MXT1664S_MAX_MT_FINGERS, 10, 20, 20, 255, 15,
+	255, 15, 5, 5, 5, 5, 0, 0, 0, 0,
 	32, 20, 51, 53, 0, 1
 };
 
@@ -356,7 +356,7 @@ static u8 t27_config_s[] = {
 };
 
 static u8 t40_config_s[] = { PROCI_GRIPSUPPRESSION_T40,
-	0x11, 3, 55, 0, 0
+	0x11, 3, 0, 0, 0
 };
 
 static u8 t42_config_s[] = { PROCI_TOUCHSUPPRESSION_T42,
@@ -401,8 +401,8 @@ static u8 t61_config_s[] = {SPT_TIMER_T61,
 
 static u8 t62_config_s[] = {PROCG_NOISESUPPRESSION_T62,
 	3, 0, 0, 23, 10, 0, 0, 0, 25, 0,
-	5, 0, 5, 0, 2, 0, 5, 5, 10, 130,
-	12, 40, 32, 20, 63, 16, 16, 4, 100, 0,
+	5, 0, 5, 0, 2, 0, 5, 5, 10, 120,
+	10, 40, 24, 20, 63, 16, 16, 4, 100, 0,
 	0, 0, 0, 0, 60, 40, 2, 15, 1, 66,
 	10, 20, 30, 20, 15, 5, 5, 0, 0, 0,
 	0, 60, 15, 1, 0, 0, 0, 0, 0, 0,
@@ -471,10 +471,6 @@ static void switch_config(u32 rev)
 		t8_config_s[1] = 150;
 
 		t9_config_s[9] = 1;
-		t9_config_s[11] = 0;
-		t9_config_s[12] = 5;
-		t9_config_s[16] = 10;
-		t9_config_s[17] = 20;
 		t9_config_s[32] = 15;
 
 		t47_config_s[2] = 35;
@@ -506,12 +502,7 @@ static void switch_config(u32 rev)
 		t62_config_s[36] = 45;
 	} else if (0x6 < rev) {
 		t8_config_s[1] = 16;
-
 		t9_config_s[7] = 132;
-		t9_config_s[11] = 0;
-		t9_config_s[12] = 5;
-		t9_config_s[16] = 10;
-		t9_config_s[17] = 20;
 
 		t46_config_s[11] = 11;
 
@@ -523,8 +514,6 @@ static void switch_config(u32 rev)
 		t62_config_s[13] = 22;
 		t62_config_s[14] = 15;
 		t62_config_s[20] = 136;
-		t62_config_s[21] = 15;
-		t62_config_s[23] = 24;
 		t62_config_s[35] = 80;
 		t62_config_s[36] = 55;
 		t62_config_s[42] = 30;
